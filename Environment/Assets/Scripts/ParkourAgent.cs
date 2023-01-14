@@ -5,31 +5,48 @@ using UnityEngine.AI;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using UnityEngine.InputSystem;
 
 public class ParkourAgent : Agent
 {
-    public float _moveSpeed = 5f;
-    public float _jumpSpeed = 3.5f;
+    [Header("Goal")]
+    public Transform goal;
 
-    public float _mouseSense = 20f;
+    [Header("Movement")]
+    public float moveSpeed = 5f;
+    public float mouseSense = 100f;
+    public float groundDrag = 5f;
 
-    public float _gravity = 9.81f;
-    public Transform _Goal;
+    public float jumpForce = 12f;
+    public float airMultiplier = 0.4f;
+    public float jumpCooldown = 0.1f;
+    private bool isReadyToJump;
 
-    private Vector3 _velocity;
-    private Vector3 _rotation;
+    private Vector3 rotation;
 
-    //private CharacterController _Controller;
-    private Rigidbody _rigidbody;
-    private Camera _Camera;
+    [Header("Ground Check")]
+    public float agentHeight = 1;
+    public LayerMask groundLayer;
+    private bool isGrounded;
+
+
+    [Header("DebugControls")]
+    private float verticalValue;
+    private float horizontalValue;
+    private float rotateValue;
+
+    private AgentControls controls;
+    private Rigidbody rbody;
     void Start()
     {
         //_Controller = GetComponent<CharacterController>();
-        _rigidbody = GetComponent<Rigidbody>();
-        _Camera = GetComponent<Camera>();
+        rbody = GetComponent<Rigidbody>();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+
+        controls = new AgentControls();
+        controls.Movement.Enable();
     }
 
 
@@ -42,19 +59,20 @@ public class ParkourAgent : Agent
         }
 
         // Move the target to a new spot
-        _Goal.localPosition = GetRandomPosition();
+        goal.localPosition = GetRandomPosition();
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         //relative goal position
-        sensor.AddObservation(_Goal.localPosition - transform.localPosition);
+        sensor.AddObservation(goal.localPosition - transform.localPosition);
 
         //current speed, acceleration, etc.
-        sensor.AddObservation(_rigidbody.velocity);
+        sensor.AddObservation(rbody.velocity);
+        sensor.AddObservation(transform.rotation.eulerAngles);
 
         // Target and Agent absolute positions
-        sensor.AddObservation(_Goal.localPosition);
+        sensor.AddObservation(goal.localPosition);
         sensor.AddObservation(this.transform.localPosition);
 
         //Depth map with raycasts
@@ -71,43 +89,34 @@ public class ParkourAgent : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         //Agent rotation
-        float mouseX = actionBuffers.ContinuousActions[2] * Time.deltaTime * _mouseSense;
-        _rotation.y += mouseX;
-        transform.rotation = Quaternion.Euler(_rotation);
+        Rotation(actionBuffers.ContinuousActions[2]);
 
+        // isGrounded
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, agentHeight * 0.5f + 0.1f, groundLayer);
 
         //Agent movement
-        Vector3 moveDirection = transform.forward * actionBuffers.ContinuousActions[0] + transform.right * actionBuffers.ContinuousActions[1];
-        _rigidbody.AddForce(moveDirection * _moveSpeed, ForceMode.Force);
+        Movement(actionBuffers.ContinuousActions[0], actionBuffers.ContinuousActions[1]);
 
+        //handle drag
+        Drag();
 
+        // speed control
+        SpeedControl();
 
-        //Vector3 acceleration = Vector3.zero;
-        //acceleration.x += actionBuffers.ContinuousActions[0] * _moveSpeed;
-        //acceleration.z += actionBuffers.ContinuousActions[1] * _moveSpeed;
-
-        //if (actionBuffers.DiscreteActions[0] == 1)
-        //{
-        //    acceleration.y = _jumpSpeed;
-        //}
-        
-        //acceleration.y -= _gravity;
-
-
-        //_velocity = _velocity + acceleration * Time.deltaTime;
-
-        //_velocity.x = Mathf.Clamp(_velocity.x, -_moveSpeed, _moveSpeed);
-        //_velocity.z = Mathf.Clamp(_velocity.z, -_moveSpeed, _moveSpeed);
-
-        //_Controller.Move(_velocity);
-
-        
+        // Jump
+        if (actionBuffers.DiscreteActions[0] == 1)
+        {
+            if (isGrounded || isReadyToJump)
+            {
+                Jump();
+            }
+        }
 
         // Rewards
-        float distanceToTarget = Vector3.Distance(this.transform.localPosition, _Goal.localPosition);
+        float distanceToTarget = Vector3.Distance(this.transform.localPosition, goal.localPosition);
 
         // Reached target
-        if (distanceToTarget < 1f)
+        if (distanceToTarget < 1.5f)
         {
             SetReward(1.0f);
             EndEpisode();
@@ -125,28 +134,98 @@ public class ParkourAgent : Agent
         
         var continuousActionsOut = actionsOut.ContinuousActions;
         var DiscreteActionsOut = actionsOut.DiscreteActions;
-        
+
         // Move + Strafe
-        continuousActionsOut[0] = Input.GetAxis("Horizontal");
-        continuousActionsOut[1] = Input.GetAxis("Vertical");
+        controls.Movement.VerticalMove.performed += ctx => verticalValue = ctx.ReadValue<float>();
+        controls.Movement.VerticalMove.canceled += ctx => verticalValue = 0;
+        controls.Movement.HorizontalMove.performed += ctx => horizontalValue = ctx.ReadValue<float>();
+        controls.Movement.HorizontalMove.canceled += ctx => horizontalValue = 0;
+        continuousActionsOut[0] = verticalValue;
+        continuousActionsOut[1] = horizontalValue;
+
+        //continuousActionsOut[0] = Input.GetAxis("Vertical");
+        //continuousActionsOut[1] = Input.GetAxis("Horizontal");
 
         // Rotate
-        continuousActionsOut[2] = Input.GetAxis("Mouse X");
+        controls.Movement.Rotate.performed += ctx => rotateValue = ctx.ReadValue<float>();
+        controls.Movement.Rotate.canceled += ctx => rotateValue = 0;
+        continuousActionsOut[2] = rotateValue;
+
+        //continuousActionsOut[2] = Input.GetAxis("Mouse X");
 
         // Jump
-        DiscreteActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1 : 0;
-    }
+        controls.Movement.Jump.performed += ctx => DiscreteActionsOut[0] = (int)ctx.ReadValue<float>();
 
+        //DiscreteActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1 : 0;
+
+    }
+    
     private Vector3 GetRandomPosition()
     {
-        float radius = 50f;
+        float radius = 10F;
         while (true)
         {
             Vector3 randomPosition = new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius));
-            if (Physics.CheckSphere(randomPosition, 1f, LayerMask.GetMask("Ground")))
+            if (Physics.CheckSphere(randomPosition, 1f, groundLayer))
             {
                 return randomPosition;
             }
         }
     }
+
+    private void Rotation(float x)
+    {
+        float mouseX = x * Time.deltaTime * mouseSense;
+        rotation.y += mouseX;
+        transform.rotation = Quaternion.Euler(rotation);
+    }
+
+    private void Movement(float vertical, float horizontal)
+    {
+        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+        if (isGrounded)
+            rbody.AddForce(moveDirection * moveSpeed * 10f, ForceMode.Force);
+
+        if (!isGrounded)
+            rbody.AddForce(moveDirection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+    }
+
+    private void Jump()
+    {
+        isReadyToJump = false;
+        if (isGrounded)
+            Invoke(nameof(ResetDoubleJump), jumpCooldown);
+
+        rbody.velocity = new Vector3(rbody.velocity.x, 0f, rbody.velocity.z);
+        rbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    private void ResetDoubleJump()
+    {
+        isReadyToJump = true;
+    }
+
+    private void Drag()
+    {
+        if (isGrounded)
+        {
+            rbody.drag = groundDrag;
+        }
+        else
+        {
+            rbody.drag = 0;
+        }
+    }
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rbody.velocity.x, 0f, rbody.velocity.z);
+
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rbody.velocity = new Vector3(limitedVel.x, rbody.velocity.y, limitedVel.z);
+        }
+    }
+    
 }

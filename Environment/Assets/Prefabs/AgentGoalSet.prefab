@@ -127,6 +127,10 @@ PrefabInstance:
       propertyPath: goal
       value: 
       objectReference: {fileID: 6149212086000207}
+    - target: {fileID: 699836834, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 6fc64a05b1197704ba234e9d82bccdfb, type: 3}
     - target: {fileID: 5291114221582536304, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
       propertyPath: m_Name
       value: Agent

@@ -2,22 +2,40 @@
     "Parkour Behavior": {
         "checkpoints": [
             {
-                "steps": 38306,
-                "file_path": "results\\Current\\Parkour Behavior\\Parkour Behavior-38306.onnx",
-                "reward": null,
-                "creation_time": 1673817305.6616607,
+                "steps": 499998,
+                "file_path": "results\\Current\\Parkour Behavior\\Parkour Behavior-499998.onnx",
+                "reward": 1.0,
+                "creation_time": 1673818235.6162615,
                 "auxillary_file_paths": [
-                    "results\\Current\\Parkour Behavior\\Parkour Behavior-38306.pt"
+                    "results\\Current\\Parkour Behavior\\Parkour Behavior-499998.pt"
+                ]
+            },
+            {
+                "steps": 999991,
+                "file_path": "results\\Current\\Parkour Behavior\\Parkour Behavior-999991.onnx",
+                "reward": null,
+                "creation_time": 1673819136.643604,
+                "auxillary_file_paths": [
+                    "results\\Current\\Parkour Behavior\\Parkour Behavior-999991.pt"
+                ]
+            },
+            {
+                "steps": 1000375,
+                "file_path": "results\\Current\\Parkour Behavior\\Parkour Behavior-1000375.onnx",
+                "reward": null,
+                "creation_time": 1673819139.2286222,
+                "auxillary_file_paths": [
+                    "results\\Current\\Parkour Behavior\\Parkour Behavior-1000375.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 38306,
+            "steps": 1000375,
             "file_path": "results\\Current\\Parkour Behavior.onnx",
             "reward": null,
-            "creation_time": 1673817305.6616607,
+            "creation_time": 1673819139.2286222,
             "auxillary_file_paths": [
-                "results\\Current\\Parkour Behavior\\Parkour Behavior-38306.pt"
+                "results\\Current\\Parkour Behavior\\Parkour Behavior-1000375.pt"
             ]
         }
     },

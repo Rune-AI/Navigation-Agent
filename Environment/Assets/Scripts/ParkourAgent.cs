@@ -29,6 +29,11 @@ public class ParkourAgent : Agent
     public LayerMask groundLayer;
     private bool isGrounded;
 
+    [Header("Reward")]
+    private float clostestDistanceThisEpoch;
+    private float rewardPerStep = -0.01f;
+    private float minimumDistanceToGoal = 1.5f;
+
     [Header("DebugControls")]
     private float verticalValue;
     private float horizontalValue;
@@ -60,6 +65,8 @@ public class ParkourAgent : Agent
 
         // Move the target to a new spot
         goal.localPosition = GetRandomPosition();
+
+        clostestDistanceThisEpoch = Vector3.Distance(this.transform.localPosition, goal.localPosition);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -116,10 +123,18 @@ public class ParkourAgent : Agent
         // Rewards
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, goal.localPosition);
 
-        // Reached target
-        if (distanceToTarget < 1.5f)
+        float reward = Mathf.Max(clostestDistanceThisEpoch - distanceToTarget, 0) + rewardPerStep + (distanceToTarget <= minimumDistanceToGoal ? 1 : 0);
+
+        SetReward(reward);
+
+        if (distanceToTarget < clostestDistanceThisEpoch)
         {
-            SetReward(1.0f);
+            clostestDistanceThisEpoch = distanceToTarget;
+        }
+
+        // Reached target
+        if (distanceToTarget < minimumDistanceToGoal)
+        {
             EndEpisode();
         }
 

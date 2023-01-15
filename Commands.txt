@@ -1,0 +1,5 @@
+Editor Test: mlagent-learn Config/test-config.yaml --env-areas=1
+
+Train: mlagents-learn Config\config.yaml
+
+Tensorboard: tensorboard --logdir=results

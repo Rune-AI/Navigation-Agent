@@ -1,0 +1,29 @@
+{
+    "Parkour Behavior": {
+        "checkpoints": [
+            {
+                "steps": 1019,
+                "file_path": "results\\parkourV1\\Parkour Behavior\\Parkour Behavior-1019.onnx",
+                "reward": 0.125,
+                "creation_time": 1673738865.7322195,
+                "auxillary_file_paths": [
+                    "results\\parkourV1\\Parkour Behavior\\Parkour Behavior-1019.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1019,
+            "file_path": "results\\parkourV1\\Parkour Behavior.onnx",
+            "reward": 0.125,
+            "creation_time": 1673738865.7322195,
+            "auxillary_file_paths": [
+                "results\\parkourV1\\Parkour Behavior\\Parkour Behavior-1019.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cpu"
+    }
+}

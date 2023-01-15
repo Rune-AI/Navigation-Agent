@@ -29,6 +29,9 @@ public class ParkourAgent : Agent
     public LayerMask groundLayer;
     private bool isGrounded;
 
+    [Header("Previous Actions")]
+    //private List<float> previousContinuousActions;
+    //private List<int> previousDiscreteActions;
 
     [Header("DebugControls")]
     private float verticalValue;
@@ -55,7 +58,8 @@ public class ParkourAgent : Agent
         // If the Agent fell, zero its momentum
         if (this.transform.localPosition.y < 0)
         {
-            this.transform.localPosition = new Vector3(0, 0.5f, 0);
+            rbody.velocity = Vector3.zero;
+            this.transform.localPosition = new Vector3(0, 0, 0);
         }
 
         // Move the target to a new spot
@@ -65,15 +69,21 @@ public class ParkourAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         //relative goal position
-        sensor.AddObservation(goal.localPosition - transform.localPosition);
+        sensor.AddObservation(goal.position - transform.position);
 
         //current speed, acceleration, etc.
         sensor.AddObservation(rbody.velocity);
         sensor.AddObservation(transform.rotation.eulerAngles);
 
+        //previous actions
+        //sensor.AddObservation(previousContinuousActions[0]);
+        //sensor.AddObservation(previousContinuousActions[1]);
+        //sensor.AddObservation(previousContinuousActions[2]);
+        //sensor.AddObservation(previousDiscreteActions[0]);
+
         // Target and Agent absolute positions
-        sensor.AddObservation(goal.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(goal.position);
+        sensor.AddObservation(this.transform.position);
 
         //Depth map with raycasts
         //_Camera.depthTextureMode = DepthTextureMode.Depth;
@@ -88,11 +98,23 @@ public class ParkourAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        //previousContinuousActions.Clear();
+        //previousDiscreteActions.Clear();
+        //foreach (float value in actionBuffers.ContinuousActions)
+        //{
+        //    previousContinuousActions.Add(value);
+        //}
+        //foreach (int value in actionBuffers.DiscreteActions)
+        //{
+        //    previousDiscreteActions.Add(value);
+        //}
+
         //Agent rotation
         Rotation(actionBuffers.ContinuousActions[2]);
 
         // isGrounded
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, agentHeight * 0.5f + 0.1f, groundLayer);
+        isGrounded = Physics.Raycast(transform.position + transform.up * agentHeight * 0.5f, Vector3.down, 0.1f + agentHeight * 0.5f, groundLayer);
+        Debug.DrawRay(transform.position + transform.up * agentHeight * 0.5f, Vector3.down * (0.1f + agentHeight * 0.5f), Color.red);
 
         //Agent movement
         Movement(actionBuffers.ContinuousActions[0], actionBuffers.ContinuousActions[1]);
@@ -123,7 +145,7 @@ public class ParkourAgent : Agent
         }
 
         // Fell off platform
-        else if (this.transform.localPosition.y < 0)
+        else if (this.transform.localPosition.y < -0.3f)
         {
             EndEpisode();
         }
@@ -154,7 +176,7 @@ public class ParkourAgent : Agent
         //continuousActionsOut[2] = Input.GetAxis("Mouse X");
 
         // Jump
-        controls.Movement.Jump.performed += ctx => DiscreteActionsOut[0] = (int)ctx.ReadValue<float>();
+        controls.Movement.Jump.performed += ctx => DiscreteActionsOut[0] = 1;
 
         //DiscreteActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1 : 0;
 
@@ -162,7 +184,7 @@ public class ParkourAgent : Agent
     
     private Vector3 GetRandomPosition()
     {
-        float radius = 10F;
+        float radius = 5F;
         while (true)
         {
             Vector3 randomPosition = new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius));

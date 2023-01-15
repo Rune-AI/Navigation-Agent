@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5291114220881725022}
   - component: {fileID: 5291114220881725008}
   - component: {fileID: 5291114220881725023}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5291114221192306276}
   - component: {fileID: 5291114221192306278}
   - component: {fileID: 5291114221192306277}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 5291114221438004382}
   - component: {fileID: 5291114221438004368}
   - component: {fileID: 5291114221438004383}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5291114221582536310}
-  m_Layer: 0
+  - component: {fileID: 699836835}
+  - component: {fileID: 699836832}
+  - component: {fileID: 699836833}
+  - component: {fileID: 699836834}
+  m_Layer: 7
   m_Name: Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +276,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5291114221582536304}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -281,6 +285,94 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &699836835
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291114221582536304}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 1
+--- !u!114 &699836832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291114221582536304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 10
+  TakeActionsBetweenDecisions: 1
+--- !u!114 &699836833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291114221582536304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a12c05e3482cf6d42930a74ada9a45ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  goal: {fileID: 0}
+  moveSpeed: 7
+  mouseSense: 100
+  groundDrag: 5
+  jumpForce: 6
+  airMultiplier: 0.4
+  jumpCooldown: 0.1
+  agentHeight: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &699836834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291114221582536304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 15
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 4
+      BranchSizes: 
+    VectorActionSize: 04000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: Parkour Behavior
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_DeterministicInference: 0
+  m_ObservableAttributeHandling: 0
 --- !u!1 &5291114221729919564
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +385,7 @@ GameObject:
   - component: {fileID: 5291114221729919567}
   - component: {fileID: 5291114221729919566}
   - component: {fileID: 1279046074929963731}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AgentCube_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +486,7 @@ GameObject:
   - component: {fileID: 5291114221782717632}
   - component: {fileID: 5291114221782717634}
   - component: {fileID: 5291114221782717633}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Headband
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5291114222008924770}
   - component: {fileID: 5291114222008924771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AgentCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}

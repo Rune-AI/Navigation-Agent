@@ -29,10 +29,6 @@ public class ParkourAgent : Agent
     public LayerMask groundLayer;
     private bool isGrounded;
 
-    [Header("Previous Actions")]
-    //private List<float> previousContinuousActions;
-    //private List<int> previousDiscreteActions;
-
     [Header("DebugControls")]
     private float verticalValue;
     private float horizontalValue;
@@ -75,12 +71,6 @@ public class ParkourAgent : Agent
         sensor.AddObservation(rbody.velocity);
         sensor.AddObservation(transform.rotation.eulerAngles);
 
-        //previous actions
-        //sensor.AddObservation(previousContinuousActions[0]);
-        //sensor.AddObservation(previousContinuousActions[1]);
-        //sensor.AddObservation(previousContinuousActions[2]);
-        //sensor.AddObservation(previousDiscreteActions[0]);
-
         // Target and Agent absolute positions
         sensor.AddObservation(goal.position);
         sensor.AddObservation(this.transform.position);
@@ -98,17 +88,6 @@ public class ParkourAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        //previousContinuousActions.Clear();
-        //previousDiscreteActions.Clear();
-        //foreach (float value in actionBuffers.ContinuousActions)
-        //{
-        //    previousContinuousActions.Add(value);
-        //}
-        //foreach (int value in actionBuffers.DiscreteActions)
-        //{
-        //    previousDiscreteActions.Add(value);
-        //}
-
         //Agent rotation
         Rotation(actionBuffers.ContinuousActions[2]);
 
@@ -126,7 +105,7 @@ public class ParkourAgent : Agent
         SpeedControl();
 
         // Jump
-        if (actionBuffers.DiscreteActions[0] == 1)
+        if (actionBuffers.ContinuousActions[3] >= 0.9f)
         {
             if (isGrounded || isReadyToJump)
             {
@@ -176,7 +155,7 @@ public class ParkourAgent : Agent
         //continuousActionsOut[2] = Input.GetAxis("Mouse X");
 
         // Jump
-        controls.Movement.Jump.performed += ctx => DiscreteActionsOut[0] = 1;
+        controls.Movement.Jump.performed += ctx => continuousActionsOut[3] = 1;
 
         //DiscreteActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1 : 0;
 

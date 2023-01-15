@@ -1,0 +1,38 @@
+{
+    "Parkour Behavior": {
+        "checkpoints": [
+            {
+                "steps": 499999,
+                "file_path": "results\\ParkourV5\\Parkour Behavior\\Parkour Behavior-499999.onnx",
+                "reward": 1.0,
+                "creation_time": 1673745377.068626,
+                "auxillary_file_paths": [
+                    "results\\ParkourV5\\Parkour Behavior\\Parkour Behavior-499999.pt"
+                ]
+            },
+            {
+                "steps": 500003,
+                "file_path": "results\\ParkourV5\\Parkour Behavior\\Parkour Behavior-500003.onnx",
+                "reward": 1.0,
+                "creation_time": 1673745377.1699042,
+                "auxillary_file_paths": [
+                    "results\\ParkourV5\\Parkour Behavior\\Parkour Behavior-500003.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500003,
+            "file_path": "results\\ParkourV5\\Parkour Behavior.onnx",
+            "reward": 1.0,
+            "creation_time": 1673745377.1699042,
+            "auxillary_file_paths": [
+                "results\\ParkourV5\\Parkour Behavior\\Parkour Behavior-500003.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cpu"
+    }
+}

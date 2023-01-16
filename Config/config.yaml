@@ -2,7 +2,7 @@ env_settings:
   env_path: ./Builds/Current/Environment.exe
   env_args: null
   base_port: 5005
-  num_envs: 4
+  num_envs: 5
   seed: -1
   max_lifetime_restarts: 10
   restarts_rate_limit_n: 1

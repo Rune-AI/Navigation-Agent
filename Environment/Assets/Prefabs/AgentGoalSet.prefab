@@ -123,14 +123,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6149213986334101}
     m_Modifications:
+    - target: {fileID: 699836832, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
+      propertyPath: DecisionPeriod
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 699836833, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
       propertyPath: goal
       value: 
       objectReference: {fileID: 6149212086000207}
+    - target: {fileID: 699836833, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
+      propertyPath: maxGoalRadius
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 699836833, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
+      propertyPath: startGoalRadius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 699836834, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 6fc64a05b1197704ba234e9d82bccdfb, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5291114221582536304, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
       propertyPath: m_Name
       value: Agent

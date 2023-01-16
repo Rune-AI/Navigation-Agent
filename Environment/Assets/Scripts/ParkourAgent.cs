@@ -29,6 +29,15 @@ public class ParkourAgent : Agent
     public LayerMask groundLayer;
     private bool isGrounded;
 
+    [Header("Training Curriculum")]
+    public float goalRadius;
+    public float startGoalRadius = 5f;
+    public float maxGoalRadius = 5f;
+    public float goalRadiusIncrement = 1f;
+    public float sucessRatioLimit = 0.8f;
+    private int successfulEpisodesCount;
+    public int maxStepsPerEpisodeMulti = 50;
+
     [Header("Reward")]
     private float clostestDistanceThisEpoch;
     private float rewardPerStep = -0.01f;
@@ -51,6 +60,8 @@ public class ParkourAgent : Agent
 
         controls = new AgentControls();
         controls.Movement.Enable();
+
+        goalRadius = startGoalRadius;
     }
 
 
@@ -95,6 +106,7 @@ public class ParkourAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+
         //Agent rotation
         Rotation(actionBuffers.ContinuousActions[2]);
 
@@ -135,13 +147,17 @@ public class ParkourAgent : Agent
         // Reached target
         if (distanceToTarget < minimumDistanceToGoal)
         {
-            EndEpisode();
+            EndEpisode(true);
         }
 
         // Fell off platform
         else if (this.transform.localPosition.y < -0.3f)
         {
-            EndEpisode();
+            EndEpisode(false);
+        }
+        else if (StepCount >= maxStepsPerEpisodeMulti * goalRadius)
+        {
+            EndEpisode(false);
         }
     }
 
@@ -178,10 +194,9 @@ public class ParkourAgent : Agent
     
     private Vector3 GetRandomPosition()
     {
-        float radius = 5F;
         while (true)
         {
-            Vector3 randomPosition = new Vector3(Random.Range(-radius, radius), 0, Random.Range(-radius, radius));
+            Vector3 randomPosition = new Vector3(Random.Range(-goalRadius, goalRadius), 0, Random.Range(-goalRadius, goalRadius));
             if (Physics.CheckSphere(randomPosition, 1f, groundLayer))
             {
                 return randomPosition;
@@ -242,6 +257,28 @@ public class ParkourAgent : Agent
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rbody.velocity = new Vector3(limitedVel.x, rbody.velocity.y, limitedVel.z);
         }
+    }
+
+    private void EndEpisode(bool reachedGoal)
+    {
+        if (this.CompletedEpisodes == 0)
+        {
+            EndEpisode();
+            return;
+        }
+
+        successfulEpisodesCount += reachedGoal ? 1 : 0;
+        float sucessRatio = successfulEpisodesCount / this.CompletedEpisodes;
+
+        if (sucessRatio > sucessRatioLimit)
+        {
+            if (goalRadius < maxGoalRadius)
+            {
+                goalRadius += goalRadiusIncrement;
+            }
+        }
+
+        EndEpisode();
     }
     
 }

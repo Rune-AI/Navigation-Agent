@@ -1,4 +1,4 @@
-Editor Test: mlagent-learn Config/test-config.yaml --num-areas=1
+Editor Test: mlagents-learn Config\test_config.yaml --run-id=Test --num-areas=1
 
 Train: mlagents-learn Config\config.yaml --num-areas=1
 

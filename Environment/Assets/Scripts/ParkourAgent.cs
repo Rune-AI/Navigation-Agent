@@ -27,7 +27,7 @@ public class ParkourAgent : Agent
     [Header("Ground Check")]
     public float agentHeight = 1;
     public LayerMask groundLayer;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
 
     [Header("Training Curriculum")]
     public float goalRadius;
@@ -35,13 +35,14 @@ public class ParkourAgent : Agent
     public float maxGoalRadius = 5f;
     public float goalRadiusIncrement = 1f;
     public float sucessRatioLimit = 0.8f;
-    private int successfulEpisodesCount;
+    [SerializeField] private int successfulEpisodesCount;
     public int maxStepsPerEpisodeMulti = 50;
+    [SerializeField] private float sucessRatio;
 
     [Header("Reward")]
-    private float clostestDistanceThisEpoch;
-    private float rewardPerStep = -0.01f;
-    private float minimumDistanceToGoal = 1.5f;
+    [SerializeField] private float clostestDistanceThisEpoch;
+    [SerializeField] private float rewardPerStep = -0.01f;
+    [SerializeField] private float minimumDistanceToGoal = 1.5f;
 
     [Header("DebugControls")]
     private float verticalValue;
@@ -136,6 +137,8 @@ public class ParkourAgent : Agent
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, goal.localPosition);
 
         float reward = Mathf.Max(clostestDistanceThisEpoch - distanceToTarget, 0) + rewardPerStep + (distanceToTarget <= minimumDistanceToGoal ? 1 : 0);
+
+        print(reward);
 
         SetReward(reward);
 
@@ -267,8 +270,12 @@ public class ParkourAgent : Agent
             return;
         }
 
-        successfulEpisodesCount += reachedGoal ? 1 : 0;
-        float sucessRatio = successfulEpisodesCount / this.CompletedEpisodes;
+        if (reachedGoal)
+        {
+            successfulEpisodesCount++;
+        }
+        
+        sucessRatio = successfulEpisodesCount / (float)CompletedEpisodes;
 
         if (sucessRatio > sucessRatioLimit)
         {

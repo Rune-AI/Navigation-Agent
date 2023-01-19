@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 6149212086000207}
     - target: {fileID: 699836833, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
       propertyPath: maxGoalRadius
-      value: 500
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 699836833, guid: 69e0715dcbc74244d88caefd2ea89c30, type: 3}
       propertyPath: startGoalRadius

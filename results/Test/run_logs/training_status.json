@@ -2,22 +2,22 @@
     "Parkour Behavior": {
         "checkpoints": [
             {
-                "steps": 2809,
-                "file_path": "results\\Test\\Parkour Behavior\\Parkour Behavior-2809.onnx",
+                "steps": 2943,
+                "file_path": "results\\Test\\Parkour Behavior\\Parkour Behavior-2943.onnx",
                 "reward": null,
-                "creation_time": 1674156162.5110357,
+                "creation_time": 1674213250.8984857,
                 "auxillary_file_paths": [
-                    "results\\Test\\Parkour Behavior\\Parkour Behavior-2809.pt"
+                    "results\\Test\\Parkour Behavior\\Parkour Behavior-2943.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 2809,
+            "steps": 2943,
             "file_path": "results\\Test\\Parkour Behavior.onnx",
             "reward": null,
-            "creation_time": 1674156162.5110357,
+            "creation_time": 1674213250.8984857,
             "auxillary_file_paths": [
-                "results\\Test\\Parkour Behavior\\Parkour Behavior-2809.pt"
+                "results\\Test\\Parkour Behavior\\Parkour Behavior-2943.pt"
             ]
         }
     },

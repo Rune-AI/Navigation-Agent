@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3746755834673450580}
   - component: {fileID: 1524633487528145906}
   - component: {fileID: 8522773639808073226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 591
+  m_VersionIndex: 594
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 4489279035416440969}
   - component: {fileID: 3879917144891058216}
   - component: {fileID: 9029080452872209741}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 594
+  m_VersionIndex: 597
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 3567624564361291180}
   - component: {fileID: 773232470941647635}
   - component: {fileID: 4872199902548398373}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 594
+  m_VersionIndex: 597
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1046,7 +1046,7 @@ GameObject:
   - component: {fileID: 2971255478343547255}
   - component: {fileID: 3186736716136184048}
   - component: {fileID: 873726638972750669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 585
+  m_VersionIndex: 588
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1390,7 +1390,7 @@ GameObject:
   - component: {fileID: 4002316873263115851}
   - component: {fileID: 4002316873263115848}
   - component: {fileID: 4002316873263115849}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3064,7 +3064,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2744
+  m_VersionIndex: 2747
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3169,7 +3169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7073700514518135955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3183,7 +3183,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4721934225216387290}
-  m_LocalRotation: {x: -0, y: 0.2887844, z: -0, w: 0.9573942}
+  m_LocalRotation: {x: 0, y: 0.2887812, z: 0, w: 0.95739514}
   m_LocalPosition: {x: -40.14193, y: 24.5, z: -41.41629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3213,7 +3213,7 @@ GameObject:
   - component: {fileID: 7205170122592997831}
   - component: {fileID: 9016486838403712347}
   - component: {fileID: 1853506635945146222}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3447,7 +3447,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 588
+  m_VersionIndex: 591
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3557,7 +3557,7 @@ GameObject:
   - component: {fileID: 6375451570661176733}
   - component: {fileID: 1791135360120402974}
   - component: {fileID: 5608717281408562524}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3791,7 +3791,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 591
+  m_VersionIndex: 594
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3901,7 +3901,7 @@ GameObject:
   - component: {fileID: 1627638353919620623}
   - component: {fileID: 6284697411563392807}
   - component: {fileID: 2592501441402875501}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4135,7 +4135,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 588
+  m_VersionIndex: 591
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

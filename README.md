@@ -25,7 +25,7 @@ PPO uses on-policy learning which means that it learns its value function from o
 SAC uses off-policy learning which means that it can use observations made by previous policies' exploration of the environment
 
 Our environment game engine can be costly to sample from so here we will go with SAC.
-![SAC](img\SAC.jpg "SAC")
+![SAC](img/SAC.jpg)
 
 
 # Implementation
@@ -119,23 +119,23 @@ The reward we use is the same as in the reference paper.
 ## Training
 To see how the agent is doing during training we can train it in editor or via a build.
 
-![training](img\training.gif)
+![training](img/training.gif)
 
-![training](img\TrainingSolo.gif)
+![training](img/TrainingSolo.gif)
 
 We can also inrease the amount of agents in one environment by repicating it. This can be controlled trough the cmd with `--num-areas=50`
 
-![training](img\TrainingMulti.gif)
+![training](img/TrainingMulti.gif)
 
 We can see the progress of training trough a locally hosted tensorboard.
 
-![tensorboard](img\tensorboard.png)
+![tensorboard](img/tensorboard.png)
 
 After training the model is exported as an .onnx file wich can be run by Barracuda inside unity.
 
 # Result
 Here is the agent after some training.
-![result](img\result.gif)
+![result](img/result.gif)
 
 ## Analysis
 The agent still seems to have some trouble pinpointing the target, this can be a few things and is probably all of them combined.

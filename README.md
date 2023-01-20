@@ -9,13 +9,13 @@ A crucial part of non-player characters (NPCs) in games is navigation, which all
 
 # Design
 ## General
-For this reearch we will use unity and their [ml-agents](https://github.com/Unity-Technologies/ml-agents) library which is based on [PyTorch](https://pytorch.org/) and the backend is made with [Barracuda](https://docs.unity3d.com/Packages/com.unity.barracuda@1.0/manual/index.html) a lightweight cross-platform neural network inference library for Unity.
+For this research we will use unity and their [ml-agents](https://github.com/Unity-Technologies/ml-agents) library which is based on [PyTorch](https://pytorch.org/) and the backend is made with [Barracuda](https://docs.unity3d.com/Packages/com.unity.barracuda@1.0/manual/index.html) a lightweight cross-platform neural network inference library for Unity.
 
 ## Algorithms
 ### Proximal Policy Optimization (PPO) versus Soft Actor Critic (SAC)
 
 | PPO                                                 | SAC                                        |
-|-----------------------------------------------------|--------------------------------------------|
+| --------------------------------------------------- | ------------------------------------------ |
 | Works in both discrete and continuous action spaces | Works in a continuous action space         |
 | On-policy                                           | Off-policy                                 |
 | Uses entropy regularization                         | Adds entropy to the maximization objective |
@@ -31,7 +31,7 @@ Our environment game engine can be costly to sample from so here we will go with
 # Implementation
 
 ## Behavior
-We use ml-agents to do most of the heavy lifting. We need to just define our agent behavior.
+We use ml-agents to do most of the heavy lifting. We just need to define our agent behavior.
 
 This can be done by creating these simple functions.
 
@@ -123,7 +123,7 @@ To see how the agent is doing during training we can train it in editor or via a
 
 ![training](img/TrainingSolo.gif)
 
-We can also inrease the amount of agents in one environment by repicating it. This can be controlled trough the cmd with `--num-areas=50`
+We can also increase the amount of agents in one environment by repicating it. This can be controlled trough the cmd with `--num-areas=50`.
 
 ![training](img/TrainingMulti.gif)
 
@@ -131,14 +131,14 @@ We can see the progress of training trough a locally hosted tensorboard.
 
 ![tensorboard](img/tensorboard.png)
 
-After training the model is exported as an .onnx file wich can be run by Barracuda inside unity.
+After training the model is exported as an .onnx file which can be run by Barracuda inside unity.
 
 # Result
 Here is the agent after some training.
 ![result](img/result.gif)
 
 ## Analysis
-The agent still seems to have some trouble pinpointing the target, this can be a few things and is probably all of them combined.
+The agent still seems to have some trouble pinpointing the target, this can be a few things and the real problem is probably all of them combined.
 
 ### Not enough training
 According to the tensorboard graphs, the agent was still improving. We stopped the training prematurely.
